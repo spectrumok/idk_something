@@ -997,6 +997,7 @@ function lib:CreateWindow(KeyCode)
 				local Dropdown_Options = {
 					items = list
 				}
+                local Multi_Selected = {}
 				local state = false
 
 				local Dropdown = Instance.new("TextButton")
@@ -1110,7 +1111,7 @@ function lib:CreateWindow(KeyCode)
 				for _,v in next, list do
 					if not ScrollingFrame:FindFirstChild(tostring(v)) then
 						local TextButton = Instance.new("TextButton")
-
+                        
 						TextButton.Parent = ScrollingFrame
 						TextButton.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 						TextButton.BorderColor3 = Color3.fromRGB(0, 0, 0)
@@ -1125,15 +1126,31 @@ function lib:CreateWindow(KeyCode)
 						TextButton.AutoButtonColor = false
 
 						TextButton.MouseButton1Down:Connect(function()
-							TextLabel.Text = "Selected: " .. tostring(v)
+                            if not multi_dropdown then
+							    TextLabel.Text = "Selected: " .. tostring(v)
 
-							ScrollingFrame.Visible = false
-							Frame.Visible = false
-							
-							TweenService:Create(add, TweenInfo.new(0.2, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {Rotation = -0}):Play()
-							TweenService:Create(Dropdown, TweenInfo.new(0.2, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {Size = UDim2.new(0, 485, 0, 50)}):Play()
-							callback(tostring(v))
-						end)
+                                ScrollingFrame.Visible = false
+                                Frame.Visible = false
+                                
+                                TweenService:Create(add, TweenInfo.new(0.2, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {Rotation = -0}):Play()
+                                TweenService:Create(Dropdown, TweenInfo.new(0.2, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {Size = UDim2.new(0, 485, 0, 50)}):Play()
+							    callback(tostring(v))
+                            else
+                                if not table.find(Multi_Selected, tostring(v)) then
+                                    table.insert(Multi_Selected, tostring(v))
+                                    TextLabel.Text = "Selected: " .. table.concat(Multi_Selected, ", ")
+                                else
+                                    for i, v in next, Multi_Selected do
+                                        if v == tostring(v) then
+                                            table.remove(Multi_Selected, i)
+                                            break
+                                        end
+                                    end
+                                    TextLabel.Text = "Selected: " .. table.concat(Multi_Selected, ", ")
+                                end
+							    callback(Multi_Selected)
+                            end
+                        end)
 
 						AddDarkStrokes(TextButton)
 						AddTextStrokes(TextButton)
