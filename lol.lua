@@ -1138,7 +1138,11 @@ function lib:CreateWindow(KeyCode)
                             else
                                 if not table.find(Multi_Selected, tostring(v)) then
                                     table.insert(Multi_Selected, tostring(v))
-                                    TextLabel.Text = "Selected: " .. table.concat(Multi_Selected, ", ")
+									if #Multi_Selected > 0 then
+                                    	TextLabel.Text = "Selected: " .. table.concat(Multi_Selected, ", ")
+									else
+										TextLabel.Text = "Selected: None"
+									end
                                 else
                                     for i, v in next, Multi_Selected do
                                         if v == tostring(v) then
@@ -1146,7 +1150,11 @@ function lib:CreateWindow(KeyCode)
                                             break
                                         end
                                     end
-                                    TextLabel.Text = "Selected: " .. table.concat(Multi_Selected, ", ")
+                                    if #Multi_Selected > 0 then
+                                    	TextLabel.Text = "Selected: " .. table.concat(Multi_Selected, ", ")
+									else
+										TextLabel.Text = "Selected: None"
+									end
                                 end
 							    callback(Multi_Selected)
                             end
