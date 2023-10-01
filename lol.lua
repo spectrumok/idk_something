@@ -767,6 +767,17 @@ function lib:CreateWindow(KeyCode)
 					callback(state)
 				end)
 
+				if state then
+					TweenService:Create(Frame_Stroke, TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Color = Color3.fromRGB(255, 226, 110)}):Play()
+					TweenService:Create(Dot, TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(255, 226, 110)}):Play()
+					TweenService:Create(Dot, TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Position = UDim2.new(0.516, 0, 0.115, 0)}):Play()
+					callback(state)
+				else
+					TweenService:Create(Frame_Stroke, TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Color = Color3.fromRGB(30, 30, 30)}):Play()
+					TweenService:Create(Dot, TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(30, 30, 30)}):Play()
+					TweenService:Create(Dot, TweenInfo.new(0.2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out), {Position = UDim2.new(0.1, 0, 0.115, 0)}):Play()
+				end
+
 				return Toggle_Options
 			end
 
